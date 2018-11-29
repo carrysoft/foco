@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="employee_print_form_view" model="ir.ui.view">
+            <field name="name">employee.print.form</field>
+            <field name="model">employee.print</field>
+            <field name="arch" type="xml">
+                <form string="Attedance Import" >
+                    <p class="oe_gray">This wizard will print employee attendances.</p>
+                    <group>
+                        <group>
+                            <field name="start_date"/>
+                        </group>
+                        <group>
+                            <field name="end_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Select Employees (Optional)">
+                            <field name="employee_ids"/>
+                        </page>
+                    </notebook>
+                <footer>
+                    <button name ="print_attendance" string="Print" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="employee_print_action">
+          <field name="name">Print Attendance</field>
+          <field name="res_model">employee.print</field>
+          <field name="view_mode">form</field>
+          <field name="target">new</field>
+      </record>
+     
+      <act_window id="print_hr_attendance_report_wizard"
+          multi="True"
+          key2="client_action_multi" name="hr_attendance_wizard"
+          res_model="employee.print" src_model="hr.attendance"
+          view_mode="form" target="new" view_type="form" />
+
+        <menuitem id="menu_hr_attendance_print" action="employee_print_action" parent="hr_attendance.menu_hr_attendance_root" 
+                  groups="hr_attendance.group_hr_attendance_user" sequence="210"/>
+        
+   </data>
+ </odoo>

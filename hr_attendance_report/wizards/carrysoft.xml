@@ -1,0 +1,33 @@
+<odoo>
+    <record model="ir.ui.view" id="attendance_report_wizard_form">
+        <field name="name">HR Attendance Report</field>
+        <field name="model">attendance.carrysoft.report.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Registro de Asistencias">
+                <group>
+                    <group>
+                        <field name="date_start"/>
+                    </group>
+                    <group>
+                        <field name="date_end"/>
+                    </group>
+	        </group>
+                <footer>
+                    <button name="get_report" string="Get Report" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_attendance_report_wizard"
+                name="Attendance Carrysoft Report"
+                res_model="attendance.carrysoft.report.wizard"
+                view_mode="form"
+                target="new"/>
+
+    <menuitem action="action_attendance_report_wizard"
+              id="menu_attendance_carrysoft_report_wizard"
+              parent="hr_attendance.menu_hr_attendance_report"/>
+</odoo>

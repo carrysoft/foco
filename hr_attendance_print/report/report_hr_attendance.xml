@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <report
+            id="hr_attendance_report_custom"
+            menu = 'False'
+            model="hr.attendance"
+            string="Print HR Attendance"
+            report_type="qweb-pdf"
+            name="hr_attendance_print.attendance_template_custom_id"
+            file="hr_attendance_print.attendance_template_custom_id"
+        />
+        
+        <template id="attendance_template_custom_id">
+               <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.internal_layout">
+                         <div class="page">
+                             <div class="text-center">
+                                 <h3>
+                                     <strong>Asistencias de: <span t-esc="doc.name"/></strong><br/>
+				     <strong><span t-esc="data['start_date']" t-options='{"widget":"date"}'/> hasta </strong>  <strong t-esc="data['end_date']" t-options='{"widget":"date"}'/>
+                                 </h3>
+                             </div>
+                           <table class="table table-responsive">
+                               <tr style="border: 2px solid black;">
+                                    <td><strong>Entrada</strong ></td>
+                                    <td><strong>Salida</strong></td>
+                                    <td><strong>Horas</strong></td>
+                               </tr>
+                               <t t-foreach ="data['attendance_data'][str(doc.id)]" t-as="line">
+                                   <tr style="border: 2px solid grey;">
+                                    <td><span t-esc="line['check_in']"/></td>
+				    <td><span t-esc="line['check_out']"/></td>
+				    <td><span t-esc="line['worked_hours']"/></td>
+                               </tr>
+                               </t>
+                                </table>
+                        </div>
+                    </t>
+               </t>
+        </template>
+        
+  </data>
+</odoo>

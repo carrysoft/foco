@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <report
+            id="timesheet_overtime"
+            menu = 'False'
+            model="hr_timesheet_sheet.sheet"
+            string="Print Timesheet"
+            report_type="qweb-pdf"
+            name="print_timesheet_regular_overtime.regular_id"
+            file="print_timesheet_regular_overtime.regular_id"
+        />
+        
+        <template id="regular_id">
+               <t t-foreach="docs" t-as="doc">
+                    <t t-call="report.external_layout">
+                         <div class="page">
+                             <div class="text-center">
+                                 <h3>
+                                     <strong>Timesheet of: <span t-esc="data['start_date']"/> to </strong>  <strong t-esc="data['end_date']"/>
+                                 </h3>
+                             </div>
+                            <table class="table table-responsive">
+                                <tr style="border: 2px solid black;">
+                                <td><strong>Employee Name</strong></td><td><strong>Employee ID</strong></td><td><strong>Department</strong></td><td><strong>Company</strong></td><td></td>                                   </tr>
+                               <tr style="border: 2px solid black;">
+                                    <td><span t-esc="doc.name"/></td><td><span t-esc="doc.identification_id"/></td><td><span t-field="doc.department_id"/></td><td><span t-field="doc.company_id"/></td><td></td>
+                               </tr>
+                           </table>
+                           <table class="table table-responsive">
+                               <tr style="border: 2px solid black;">
+                                    <td><strong>Date</strong ></td>
+                                    <td><strong>Description</strong></td>
+                                    <td class="text-right"><strong>Regular Hours</strong></td>
+                                    <td class="text-right"><strong>Overtime Hours</strong></td>
+                               </tr>
+                               <t t-foreach ="data['employee_data'][str(doc.id)]" t-as="line">
+                                   <tr>
+                                    
+                                        <td><span t-esc="line"/></td>
+                                        <td><span t-esc="data['employee_data'][str(doc.id)][line]['desc']"/></td>
+                                        <td class="text-right"><span t-esc="data['employee_data'][str(doc.id)][line]['regular_hour']" /></td>
+                                        <td class="text-right"><span t-esc="data['employee_data'][str(doc.id)][line]['overtime_hour']" /></td>
+                                   </tr>
+                               </t>
+                                </table>
+                            <div class="row mt32 mb32">
+                             <div class="col-xs-6 text-left">
+                                <strong>Employee Signature:____________________</strong>
+                             </div>
+                             <div class="col-xs-6 text-right">
+                                <strong>Date:____________________</strong>
+                             </div>
+                         </div>
+                         <div class="row mt32 mb32">
+                             <div class="col-xs-6 text-left">
+                                <strong>Manager Signature:____________________</strong>
+                             </div>
+                             <div class="col-xs-6 text-right">
+                                <strong>Date:____________________</strong>
+                             </div>
+                         </div>
+                        </div>
+                    </t>
+               </t>
+        </template>
+        
+  </data>
+</odoo>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+# Report untuk generate rekap presensi
+# author @CakJuice <hd.brandoz@gmail.com>
+-->
+
+<odoo>
+	<data>
+		<report id="cj_attendance_custom_report"
+			model="cj.attendance.report.wizard"
+			string="Laporan Rekap Presensi"
+			report_type="qweb-pdf"
+			name="cj_tutor_report.attendance_custom_report_view"
+			file="cj_tutor_report.attendance_custom_report"
+			menu="False"/>
+
+		<record model="report.paperformat" id="paperformat_attendance_custom_report">
+			<field name="name">paperformat.attendance.custom.report</field>
+			<field name="default" eval="True" />
+			<field name="format">A4</field>
+			<field name="page_width">0</field>
+			<field name="page_width">0</field>
+			<field name="orientation">Portrait</field>
+			<field name="margin_top">30</field>
+			<field name="margin_right">5</field>
+			<field name="margin_bottom">10</field>
+			<field name="margin_left">5</field>
+			<field name="header_line" eval="False"/>
+			<field name="header_spacing">20</field>
+			<field name="dpi">90</field> 
+		</record>
+
+		<!-- record id dibawah ini harus sama dengan report id -->
+		<record id="cj_tutor_report.cj_attendance_custom_report" model="ir.actions.report.xml">
+			<!-- field ref harus sama dengan id record paperformat -->
+			<field name="paperformat_id" ref="cj_tutor_report.paperformat_attendance_custom_report"/>
+		</record>
+
+		<!-- template id dibawah ini harus sama dengan report name -->
+		<template id="attendance_custom_report_view">
+			<div class="header" style="border-bottom: 2px solid black">
+				<h3 class="text-center">REKAPITULASI PRESENSI TEST CUSTOM REPORT</h3>
+				<h4 class="text-center">
+					Periode: <span t-esc="date_start"/> - <span t-esc="date_end"/>
+				</h4>
+			</div>
+
+			<div class="page">
+				<table class="table table-condensed table-bordered" style="width: 100%">
+					<thead>
+						<tr>
+							<th class="text-center" style="width: 50%">Nama Karyawan</th>
+							<th class="text-center" style="width: 25%">Jumlah Presensi</th>
+							<th class="text-center" style="width: 25%">Jumlah Absensi</th>
+						</tr>
+					</thead>
+					<tbody>
+						<t t-foreach="docs" t-as="doc">
+							<tr>
+								<td><span t-esc="doc['employee']"/></td>
+								<td class="text-center"><span t-esc="doc['presensi']"/></td>
+								<td class="text-center"><span t-esc="doc['absensi']"/></td>
+							</tr>
+						</t>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="footer">
+				<div class="row text-center" style="border-top: 1px solid black;">
+					<div class="col-xs-3 col-xs-offset-9 text-right">
+						<ul class="list-inline" style="margin-top:10px;">
+							<li>Hal:</li>
+							<li><span class="page"/></li>
+							<li>/</li>
+							<li><span class="topage"/></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</template>
+	</data>
+</odoo>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <act_window
+      id="library_book_action"
+      name="Library Books"
+      res_model="library.book" />
+
+    <menuitem
+      id="library_book_menu"
+      name="Library"
+      action="library_book_action"
+      parent=""
+      sequence="5" />
+
+    <record id="library_book_view_form" model="ir.ui.view">
+      <field name="name">Library Book Form</field>
+      <field name="model">library.book</field>
+      <field name="arch" type="xml">
+
+        <form>
+          <group>
+            <field name="name"/>
+            <field name="author_ids" widget="many2many_tags"/>
+          </group>
+        </form>
+
+      </field>
+    </record>
+
+    <record id="library_book_view_tree" model="ir.ui.view">
+      <field name="name">Library Book List</field>
+      <field name="model">library.book</field>
+      <field name="arch" type="xml">
+
+        <tree>
+          <field name="name"/>
+        </tree>
+
+      </field>
+    </record>
+
+    <record id="library_book_view_search" model="ir.ui.view">
+      <field name="name">Library Book Search</field>
+      <field name="model">library.book</field>
+      <field name="arch" type="xml">
+
+        <search>
+          <field name="name"/>
+          <field name="author_ids"/>
+          <filter string="No Authors"
+                 domain="[('author_ids','=',False)]"/>
+        </search>
+
+      </field>
+    </record>
+
+    <act_window id="action_wizard_loan_books"
+	    name="Grabar prestamos"
+	    res_model="library.loan.wizard"
+	    view_mode="form"
+	    target="new"
+	    />
+    <menuitem id="menu_wizard_loan_books"
+	    parent="library_book_menu"
+	    action="action_wizard_loan_books"
+	    sequence="20"
+	    />
+
+    <record id='library_loan_wizard_form' model='ir.ui.view'>
+	    <field name='name'>library loan wizard from view</field>
+	    <field name='model'>library.loan.wizard</field>
+	    <field name='arch' type='xml'>
+		<form string='Libros prestados'>
+		  <sheet>
+	 	     <group>
+			<field name='member_id'/>
+		     </group>
+		     <group>
+			<field name='book_ids'/>
+		     </group>
+		  </sheet>
+		  <footer>
+		    <button name='record_loans'
+			    string='OK'
+			    class='btn-primary'
+			    type='object'/>
+		    <button string='Cancel'
+			    class='btn-default'
+			    special='cancel'/>
+		  </footer>
+		</form>
+	    </field>
+    </record>
+
+  </data>
+</openerp>
+

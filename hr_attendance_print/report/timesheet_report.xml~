@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <report
+            id="report_timesheet"
+            model="hr_timesheet_sheet.sheet"
+            string="Print Timesheet"
+            report_type="qweb-pdf"
+            name="print_timesheet_regular_overtime.regular"
+            file="print_timesheet_regular_overtime.regular"
+        />
+        
+        <template id="regular">
+               <t t-foreach="docs" t-as="doc">
+                    <t t-call="report.internal_layout">
+                         <div class="page">
+                             <div class="text-left">
+                                 <h3>
+                                    <span t-field="doc.name"/> - <span>Meeting Minutes</span><br/>
+                                 </h3>
+                             </div>
+                            <table class="table table-responsive">
+                                <tr style="border: 2px solid black;" t-if="doc.start_date">
+                                   <td><strong>Meeting Date</strong></td><td> <span t-field="doc.start_date"/></td>
+                                   <td><strong>Meeting Location </strong></td><td> <span t-field="doc.location"/></td>
+                               </tr>
+                               <tr style="border: 2px solid black;"  t-if="doc.start_datetime">
+                                   <td><strong>Meeting Date</strong></td><td> <span t-field="doc.start_datetime"/></td>
+                                   <td><strong>Meeting Location </strong></td><td> <span t-field="doc.location"/></td>
+                               </tr>
+                            </table>
+                            
+                           <table class="table table-responsive">
+                                <tr style="border: 2px solid black;">
+                                   <td><strong>Presenter</strong></td><td> <span t-field="doc.presenter_id"/></td><td></td><td></td>
+                               </tr>
+                                <tr style="border: 2px solid black;">
+                                   <td><strong>Meeting Called by</strong></td><td> <span t-field="doc.user_id"/></td>
+                                   <td><strong>Facilitator</strong></td><td> <span t-field="doc.facilitator"/></td>
+                               </tr>
+                               <tr style="border: 2px solid black;">
+                                   <td><strong>Note Taker</strong></td><td> <span t-field="doc.note_taker"/></td>
+                                   <td><strong>Timekeeper</strong></td><td> <span t-field="doc.time_keeper"/></td>
+                               </tr>
+                            </table>
+                            <table class="table table-responsive">
+                                <tr style="border: 2px solid black;">
+                                   <td><strong>Meeting Attendees</strong></td><td></td>
+                               </tr>
+                               <tr t-foreach="doc.partner_ids" t-as="line">
+                                   <td><span t-field="line.name"/></td><td></td>
+                               </tr>
+                            </table>
+                            
+                            <table class="table table-responsive">
+                            
+                               <tr style="border: 2px solid black;">
+                                   <td><strong>Agenda Topic</strong></td><td></td>
+                               </tr>
+                               
+                               <tr style="border: 2px solid black;">
+                                   <td> <span t-field="doc.agenda_topic"/></td><td><strong></strong></td>
+                               </tr>
+                            
+                                <tr style="border: 2px solid black;">
+                                   <td><strong>Discussion </strong></td><td></td>
+                               </tr>
+                               
+                               <tr style="border: 2px solid black;">
+                                   <td> <span t-field="doc.description"/></td><td><strong></strong></td>
+                               </tr>
+                               
+                                <tr style="border: 2px solid black;">
+                                   <td><strong>Action Items</strong></td><td></td>
+                               </tr>
+                               <tr style="border: 2px solid black;">
+                                   <td><span t-field="doc.action_items"/></td><td></td>
+                               </tr>
+                               
+                               <tr style="border: 2px solid black;">
+                                   <td><strong>Conclusion</strong></td><td></td>
+                               </tr>
+                               
+                               <tr style="border: 2px solid black;">
+                                   <td> <span t-field="doc.conclusion"/></td><td><strong></strong></td>
+                               </tr>                               
+                               
+                            </table>
+                            
+                        </div>
+                    </t>
+               </t>
+        </template>
+        
+  </data>
+</odoo>

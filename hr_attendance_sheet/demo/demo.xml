@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <!--daTA FOR RESOURCE -->
+
+         <record id="attendance_sheet_working_hours" model="resource.calendar">
+            <field name="name">Normal Working hours</field>
+        </record>
+
+        <record model="resource.calendar.attendance" id="calendar_attendancesheet_sat1">
+            <field name="name">Saturday morning</field>
+            <field name="dayofweek">5</field>
+            <field name="hour_from">08</field>
+            <field name="hour_to">12</field>
+            <field name="calendar_id" ref="attendance_sheet_working_hours"/>
+        </record>
+        <record model="resource.calendar.attendance" id="calendar_attendancesheet_sat2">
+            <field name="name">Saturday evening</field>
+            <field name="dayofweek">5</field>
+            <field name="hour_from">13</field>
+            <field name="hour_to">17</field>
+            <field name="calendar_id" ref="attendance_sheet_working_hours"/>
+        </record>
+        <record model="resource.calendar.attendance" id="calendar_attendancesheet_sun1">
+            <field name="name">Sunday</field>
+            <field name="dayofweek">6</field>
+            <field name="hour_from">08</field>
+            <field name="hour_to">17</field>
+            <field name="calendar_id" ref="attendance_sheet_working_hours"/>
+        </record>
+        <record model="resource.calendar.attendance" id="calendar_attendancesheet_mon1">
+            <field name="name">Monday</field>
+            <field name="dayofweek">0</field>
+            <field name="hour_from">8</field>
+            <field name="hour_to">17</field>
+            <field name="calendar_id" ref="attendance_sheet_working_hours"/>
+        </record>
+        <record model="resource.calendar.attendance" id="calendar_attendancesheet_tue1">
+            <field name="name">Tuesday</field>
+            <field name="dayofweek">1</field>
+            <field name="hour_from">08</field>
+            <field name="hour_to">17</field>
+            <field name="calendar_id" ref="attendance_sheet_working_hours"/>
+        </record>
+        <record model="resource.calendar.attendance" id="calendar_attendancesheet_wed1">
+            <field name="name">Wednesday</field>
+            <field name="dayofweek">2</field>
+            <field name="hour_from">08</field>
+            <field name="hour_to">17</field>
+            <field name="calendar_id" ref="attendance_sheet_working_hours"/>
+        </record>
+        <record model="resource.calendar.attendance" id="calendar_attendance_thu1">
+            <field name="name">Thursday</field>
+            <field name="dayofweek">3</field>
+            <field name="hour_from">08</field>
+            <field name="hour_to">17</field>
+            <field name="calendar_id" ref="attendance_sheet_working_hours"/>
+        </record>
+
+
+
+    </data>
+
+
+    <data>
+        <!-- data for contract-->
+
+         <record id="hr_salary_structure_normal" model="hr.payroll.structure">
+            <field name="code">NSS</field>
+            <field name="name">Normal Salary Structure </field>
+           <field eval="[(6, 0, [ref('hr_salary_rule_att_absence'),ref('hr_salary_rule_att_late'),ref('hr_salary_rule_att_overtime'),ref('hr_salary_rule_att_diff'),ref('hr_payroll.hr_rule_basic'), ref('hr_payroll.hr_rule_taxable'),ref('hr_payroll.hr_rule_net')])]" name="rule_ids"/>
+            <field name="parent_id" ref=""/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+         <record id="hr_contract_pieter_parker" model="hr.contract">
+            <field name="name">Contract For Pieter Parker</field>
+            <field name="type_id" ref="hr_contract.hr_contract_type_emp"/>
+            <field name="date_start" eval="time.strftime('%Y')+'-01-01'"/>
+            <field name="date_end" eval="time.strftime('%Y')+'-12-31'"/>
+            <field name="struct_id" ref="hr_salary_structure_normal"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+            <field name="notes">This is Pieter Parker's contract</field>
+            <field eval="6000.0" name="wage"/>
+            <field name="resource_calendar_id" ref="attendance_sheet_working_hours"/>
+        </record>
+    </data>
+    <data >
+
+
+        <!--demo data fro attendance-->
+        <record id="hr_att_sheet_att1" model="hr.attendance">
+            <field eval="time.strftime('2017-08-01 06:10')" name="check_in"/>
+            <field eval="time.strftime('2017-08-01 15:15')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+
+         <record id="hr_att_sheet_att2" model="hr.attendance">
+            <field eval="time.strftime('2017-08-02 05:50')" name="check_in"/>
+            <field eval="time.strftime('2017-08-02 15:05')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+         <record id="hr_att_sheet_att3" model="hr.attendance">
+            <field eval="time.strftime('2017-08-03 06:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-03 14:55')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+
+         <record id="hr_att_sheet_att4" model="hr.attendance">
+            <field eval="time.strftime('2017-08-04 10:20')" name="check_in"/>
+            <field eval="time.strftime('2017-08-04 12:30')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+
+          <record id="hr_att_sheet_att5" model="hr.attendance">
+            <field eval="time.strftime('2017-08-05 06:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-05 09:55')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+
+         <record id="hr_att_sheet_att6" model="hr.attendance">
+            <field eval="time.strftime('2017-08-05 11:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-05 15:00')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+          <record id="hr_att_sheet_att7" model="hr.attendance">
+            <field eval="time.strftime('2017-08-06 06:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-06 15:10')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+
+         <record id="hr_att_sheet_att8" model="hr.attendance">
+            <field eval="time.strftime('2017-08-08 06:35')" name="check_in"/>
+            <field eval="time.strftime('2017-08-08 15:00')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+
+          <record id="hr_att_sheet_att9" model="hr.attendance">
+            <field eval="time.strftime('2017-08-09 07:45')" name="check_in"/>
+            <field eval="time.strftime('2017-08-09 15:10')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+
+         <record id="hr_att_sheet_att10" model="hr.attendance">
+            <field eval="time.strftime('2017-08-10 06:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-10 15:00')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+         <record id="hr_att_sheet_att11" model="hr.attendance">
+            <field eval="time.strftime('2017-08-12 06:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-12 15:00')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+         <record id="hr_att_sheet_att12" model="hr.attendance">
+            <field eval="time.strftime('2017-08-13 06:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-13 15:00')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+         <record id="hr_att_sheet_att13" model="hr.attendance">
+            <field eval="time.strftime('2017-08-14 05:40')" name="check_in"/>
+            <field eval="time.strftime('2017-08-14 14:50')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+         <record id="hr_att_sheet_att14" model="hr.attendance">
+            <field eval="time.strftime('2017-08-15 07:40')" name="check_in"/>
+            <field eval="time.strftime('2017-08-15 15:00')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+         <record id="hr_att_sheet_att15" model="hr.attendance">
+            <field eval="time.strftime('2017-08-16 06:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-16 16:50')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+         <record id="hr_att_sheet_att16" model="hr.attendance">
+            <field eval="time.strftime('2017-08-19 06:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-19 10:05')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+         <record id="hr_att_sheet_att17" model="hr.attendance">
+            <field eval="time.strftime('2017-08-19 11:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-19 15:02')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+         <record id="hr_att_sheet_att18" model="hr.attendance">
+            <field eval="time.strftime('2017-08-20 06:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-20 15:00')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+         <record id="hr_att_sheet_att19" model="hr.attendance">
+            <field eval="time.strftime('2017-08-21 06:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-21 15:00')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+         <record id="hr_att_sheet_att20" model="hr.attendance">
+            <field eval="time.strftime('2017-08-22 06:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-22 15:00')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+         <record id="hr_att_sheet_att21" model="hr.attendance">
+            <field eval="time.strftime('2017-08-23 06:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-23 13:10')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+         <record id="hr_att_sheet_att22" model="hr.attendance">
+            <field eval="time.strftime('2017-08-24 06:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-24 15:00')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+
+         <record id="hr_att_sheet_att23" model="hr.attendance">
+            <field eval="time.strftime('2017-08-26 06:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-26 10:00')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+          <record id="hr_att_sheet_att24" model="hr.attendance">
+            <field eval="time.strftime('2017-08-26 11:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-26 15:00')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+         <record id="hr_att_sheet_att25" model="hr.attendance">
+            <field eval="time.strftime('2017-08-27 06:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-27 15:00')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+         <record id="hr_att_sheet_att26" model="hr.attendance">
+            <field eval="time.strftime('2017-08-28 09:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-28 14:00')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+         <record id="hr_att_sheet_att27" model="hr.attendance">
+            <field eval="time.strftime('2017-08-29 06:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-29 15:00')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+         <record id="hr_att_sheet_att28" model="hr.attendance">
+            <field eval="time.strftime('2017-08-30 06:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-30 15:00')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+         <record id="hr_att_sheet_att29" model="hr.attendance">
+            <field eval="time.strftime('2017-08-30 17:00')" name="check_in"/>
+            <field eval="time.strftime('2017-08-30 19:30')" name="check_out"/>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>
+
+
+
+
+    </data>
+
+    <data>
+        <!--attendance sheet demo-->
+
+        <record id="hr_public_holiday1" model="hr.public.holiday">
+            <field eval="time.strftime('2017-08-28')" name="date_from"/>
+            <field eval="time.strftime('2017-08-28')" name="date_to"/>
+            <field name="state">active</field>
+            <field name="name">Public Holiday</field>
+        </record>
+
+       <!--  <record id="hr_attendance_sheet1" model="attendance.sheet">
+            <field eval="time.strftime('2017-08-1')" name="date_from"/>
+            <field eval="time.strftime('2017-08-30')" name="date_to"/>
+             <field name="name">Attendance Sheet of Pieter Parker for August-2017</field>
+            <field name="employee_id" ref="hr.employee_root"/>
+        </record>-->
+
+    </data>
+
+    <data>
+        <!--attendance policy demo data-->
+
+         <record id="policy_overtime_workday" model="hr.overtime.rule">
+             <field name="name">Working Day Overtime</field>
+             <field name="type">workday</field>
+             <field name="active_after">0.25</field>
+             <field name="rate">1.5</field>
+        </record>
+
+         <record id="policy_overtime_weekend" model="hr.overtime.rule">
+             <field name="name">Weekend Overtime</field>
+             <field name="type">weekend</field>
+             <field name="active_after">1</field>
+             <field name="rate">2</field>
+        </record>
+
+         <record id="policy_overtime_ph" model="hr.overtime.rule">
+             <field name="name">Public Holiday Overtime</field>
+             <field name="type">ph</field>
+             <field name="active_after">1</field>
+             <field name="rate">2.5</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id='template_id'>    
+    <t t-extend="HrAttendanceGreetingMessage">
+        <t t-jquery=".o_hr_attendance_validation" t-operation="after">
+            <t t-if='widget.attendance.location_name != false'>
+               <b>Location : </b> <t t-esc="widget.attendance.location_name"/><br/>
+            </t>
+            <t t-if="widget.attendance.os_name != false">
+                <b>Operating System : </b> <t t-esc="widget.attendance.os_name"/><br/>
+            </t>
+            <t t-if='widget.attendance.browser_name != false'>
+                <b>Browser : </b> <t t-esc="widget.attendance.browser_name"/><br/>
+            </t>
+        </t>
+    </t>
+</template>
+
