@@ -37,8 +37,8 @@
             <table class="table table-condensed table-bordered" style="width: 100%">
                 <thead>
                     <th class="text-center" style="width: 70%">Empleado</th>
-                    <th class="text-center" style="width: 15%">Presencia</th>
-                    <th class="text-center" style="width: 15%">Ausencia</th>
+                    <th class="text-center" style="width: 15%">Dias que Asiste</th>
+                    <th class="text-center" style="width: 15%">Dias que Falta</th>
                 </thead>
                 <tbody>
                     <t t-foreach="docs" t-as="doc">

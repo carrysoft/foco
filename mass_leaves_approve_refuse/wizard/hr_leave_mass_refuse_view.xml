@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record model="ir.ui.view" id="hr_leave_mass_refuse_form_view">
+            <field name="name">hr.leave.mass.refuse.form</field>
+            <field name="model">hr.leave.mass.refuse</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Leave Mass Refuse">
+                    <label string="Refuse Leave Requests"/>
+                    <separator colspan="4"/>
+                    <footer>
+                        <button string='Refuse' name="refuse_mass_leave" type="object"
+                            class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" icon="fa-close"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_leave_mass_refuse" key2="client_action_multi"
+            name="Refuse Leaves" res_model="hr.leave.mass.refuse"
+            src_model="hr.holidays" view_mode="form" target="new" view_type="form"/>
+</odoo>

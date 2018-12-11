@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record model="ir.ui.view" id="hr_leave_mass_approve_form_view">
+            <field name="name">hr.leave.mass.approve.form</field>
+            <field name="model">hr.leave.mass.approve</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Leave Mass Approve">
+                    <label string="Approve Leave Requests"/>
+                    <separator colspan="4"/>
+                    <footer>
+                        <button string='Approve' name="approve_mass_leave" type="object"
+                            class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" icon="fa-close"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_leave_mass_approve" key2="client_action_multi"
+            name="Approve Leaves" res_model="hr.leave.mass.approve"
+            src_model="hr.holidays" view_mode="form" target="new" view_type="form"/>
+</odoo>

@@ -7,15 +7,15 @@
             <form string="Registro de Asistencias">
                 <group>
                     <group>
-                        <field name="date_start"/>
+                        <field name="date_start" string="Fecha Inicio"/>
                     </group>
                     <group>
-                        <field name="date_end"/>
+                        <field name="date_end" string="Fecha Fin"/>
                     </group>
                 </group>
                 <footer>
-                    <button name="get_report" string="Get Report" type="object" class="oe_highlight"/>
-                    <button string="Cancel" special="cancel"/>
+                    <button name="get_report" string="Generar Informe" type="object" class="oe_highlight"/>
+                    <button string="Cancelar" special="cancel"/>
                 </footer>
             </form>
         </field>

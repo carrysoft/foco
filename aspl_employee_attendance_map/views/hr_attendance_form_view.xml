@@ -43,8 +43,8 @@
         <field name="arch" type="xml">
             <field name="check_out" position="after">
                 <field name="location_name"/>
-                <field name="os_name"/>
-                <field name="browser_name"/>
+<!--                <field name="os_name"/>
+		<field name="browser_name"/> -->
             </field>
         </field>
     </record>

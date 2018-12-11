@@ -274,7 +274,7 @@ class attendance_sheet(models.Model):
                 for att in attendances:
                     check_in = datetime.strptime(att.check_in, DATETIME_FORMAT)
                     check_out = datetime.strptime(att.check_out, DATETIME_FORMAT)
-                    res.append((check_in, check_out))
+                    res.append((check_in, check_out,att.worked_hours))
                 return res
 
             @api.multi
@@ -426,6 +426,7 @@ class attendance_sheet(models.Model):
                 late_in = timedelta(hours=00, minutes=00, seconds=00)
                 overtime = timedelta(hours=00, minutes=00, seconds=00)
                 diff_time = timedelta(hours=00, minutes=00, seconds=00)
+                worked_hours = timedelta(hours=00, minutes=00, seconds=00)
 
                 work_intervals = get_work_intervals(calender_id, day_start, day_end)
                 attendance_intervals = get_attendance_intervals(emp, calender_id, day_start, day_end)
@@ -447,6 +448,9 @@ class attendance_sheet(models.Model):
 
                                 ac_sign_in = pytz.utc.localize(attendance_interval[0]).astimezone(tz)
                                 ac_sign_out = pytz.utc.localize(attendance_interval[1]).astimezone(tz)
+                                worked_hours = pytz.utc.localize(attendance_interval[2]).astimezone(tz)
+                                print ("trabajado")
+                                print (worked_hours)
                                 values = {
                                     'date': date,
                                     'day': day_str,
@@ -455,7 +459,8 @@ class attendance_sheet(models.Model):
                                     'overtime': float_overtime,
                                     'att_sheet_id': self.id,
                                     'status': 'ph',
-                                    'note': "working on Public Holiday"
+                                    'note': "working on Public Holiday",
+                                    'worked_hours': 2.3
                                 }
                                 att_line.create(values)
                         else:
@@ -494,6 +499,7 @@ class attendance_sheet(models.Model):
                             ac_sign_out = 0
                             status = ""
                             note = ""
+                            worked_hours = 0
                             if att_work_intervals:
                                 if len(att_work_intervals) > 1:
                                     # print("there is more than one interval for that work interval")
@@ -519,6 +525,7 @@ class attendance_sheet(models.Model):
                                         pytz.utc.localize(att_work_intervals[0][0]).astimezone(tz))
                                     ac_sign_out = _get_float_from_time(
                                         pytz.utc.localize(att_work_intervals[-1][1]).astimezone(tz))
+                                    worked_hours = ac_sign_out - ac_sign_in
                                 else:
                                     late_in_interval = (work_interval[0], att_work_intervals[0][0])
                                     overtime_interval = (work_interval[1], att_work_intervals[-1][1])
@@ -532,7 +539,7 @@ class attendance_sheet(models.Model):
                                         pytz.utc.localize(att_work_intervals[0][0]).astimezone(tz))
                                     ac_sign_out = _get_float_from_time(
                                         pytz.utc.localize(att_work_intervals[0][1]).astimezone(tz))
-
+                                    worked_hours = ac_sign_out - ac_sign_in
 
                             else:
                                 late_in_interval = []
@@ -574,6 +581,7 @@ class attendance_sheet(models.Model):
                             policy_late = get_late(policy_id, float_late)
                             # print "policy late is " + str(policy_late)
                             float_diff = diff_time.total_seconds() / 3600
+                            float_worked_hours = 3.5
                             if status == 'ab':
                                 abs_cnt += 1
                                 # print 'absence counter=' + str(abs_cnt)
@@ -593,6 +601,7 @@ class attendance_sheet(models.Model):
                                 'overtime': float_overtime,
                                 'diff_time': float_diff,
                                 'status': status,
+                                'worked_hours': worked_hours,
                                 'att_sheet_id': self.id
 
                             }
@@ -609,6 +618,7 @@ class attendance_sheet(models.Model):
                                     pytz.utc.localize(att_out[0]).astimezone(tz))
                                 ac_sign_out = _get_float_from_time(
                                     pytz.utc.localize(att_out[1]).astimezone(tz))
+                                worked_hours = ac_sign_out - ac_sign_in
                                 float_overtime = overtime.total_seconds() / 3600
                                 if float_overtime <= overtime_policy['wd_after']:
                                     float_overtime = 0
@@ -622,8 +632,9 @@ class attendance_sheet(models.Model):
                                     'ac_sign_in': ac_sign_in,
                                     'ac_sign_out': ac_sign_out,
                                     'overtime': float_overtime,
-                                    'note': "overtime out of work intervals",
-                                    'att_sheet_id': self.id
+                                    'note': "Sobretiempo fuera de horario",
+                                    'att_sheet_id': self.id,
+                                    'worked_hours': worked_hours
 
                                 }
                                 att_line.create(values)
@@ -634,6 +645,7 @@ class attendance_sheet(models.Model):
                             overtime = attendance_interval[1] - attendance_interval[0]
                             ac_sign_in = pytz.utc.localize(attendance_interval[0]).astimezone(tz)
                             ac_sign_out = pytz.utc.localize(attendance_interval[1]).astimezone(tz)
+                            worked_hours = 6.5
                             # print " the actual sign in is +" + str(ac_sign_in)
                             float_overtime = overtime.total_seconds() / 3600
                             if float_overtime <= overtime_policy['we_after']:
@@ -649,8 +661,8 @@ class attendance_sheet(models.Model):
                                 'overtime': float_overtime,
                                 'att_sheet_id': self.id,
                                 'status': 'weekend',
-                                'note': "Trabajo en fin de semana"
-                                #'note': "working in weekend"
+                                'note': "Trabajo en fin de semana",
+                                'worked_hours': worked_hours
 
                             }
                             att_line.create(values)
@@ -660,7 +672,8 @@ class attendance_sheet(models.Model):
                             'day': day_str,
                             'att_sheet_id': self.id,
                             'status': 'weekend',
-                            'note': ""
+                            'note': "",
+                            'worked_hours': 1
 
                         }
                         att_line.create(values)
@@ -744,7 +757,6 @@ class attendance_sheet(models.Model):
                 'date_from': from_date,
                 'date_to': to_date,
             }
-            print(res)
             new_payslip = self.env['hr.payslip'].create(res)
             att_sheet.payslip_id=new_payslip
             payslips += new_payslip
@@ -794,6 +806,7 @@ class attendance_sheet_line(models.Model):
     ac_sign_out = fields.Float("Actual sign out",readonly=True)
     overtime = fields.Float("Overtime",readonly=True)
     late_in = fields.Float("Late In",readonly=True)
+    worked_hours = fields.Float("Horas Trabajadas",readonly=True)
     diff_time = fields.Float("Diff Time", help="Diffrence between the working time and attendance time(s) ",readonly=True)
     note = fields.Text("Note")
     status = fields.Selection(string="Status",

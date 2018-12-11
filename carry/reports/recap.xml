@@ -15,7 +15,7 @@
         <field name="dpi">90</field>
     </record>
 
-    <report id="recap_report"
+    <report id="recap_report1"
             model="attendance.recap.report.wizard1"
             string="Attendance Recap Report"
             report_type="qweb-pdf"
@@ -25,7 +25,7 @@
 
     <template id="attendance_recap_report_view1">
         <div class="header" style="border-bottom: 2px solid black">
-            <h3 class="text-center">Listado de Entradas y Salidas por empleado</h3>
+            <h3 class="text-center">Listado de Entradas y Salidas diarias</h3>
             <h4 class="text-center">
                 <strong>Desde</strong>:
                 <t t-esc="date_start"/>

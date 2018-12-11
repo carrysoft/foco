@@ -34,6 +34,7 @@
         'views/hr_attendance_policy_view.xml',
         'wizard/change_att_data_view.xml',
         'data/hr_attendance_sheet_data.xml',
+        'reports/hr_attendance_sheet_report.xml',
     ],
 
     'license': 'OPL-1',

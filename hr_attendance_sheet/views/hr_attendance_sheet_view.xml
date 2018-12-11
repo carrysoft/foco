@@ -135,7 +135,7 @@
                                         <field name="ac_sign_out" widget="float_time"/>
                                         <field name="late_in" widget="float_time" sum="Quantity"/>
                                         <field name="overtime" widget="float_time" sum="Quantity"/>
-
+                                        <field name="worked_hours" widget="float_time" sum="Quantity"/>
                                         <field name="diff_time" widget="float_time" sum="Quantity"/>
                                         <field name="status"/>
                                         <field name="note"/>

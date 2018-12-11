@@ -9,8 +9,8 @@
         Custom report for practice purpose
     """,
 
-    'author': "Cak Juice",
-    'website': "https://cakjuice.com",
+    'author': "Fco Jose Carrio",
+    'website': "https://www.carrysoft.com",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/master/odoo/addons/base/module/module_data.xml
@@ -23,14 +23,7 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-        # 'views/views.xml',
-        # 'views/templates.xml',
         'wizards/recap.xml',
         'reports/recap.xml',
-    ],
-    # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
     ],
 }

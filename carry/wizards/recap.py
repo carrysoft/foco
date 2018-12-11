@@ -12,8 +12,6 @@ class AttendanceRecapReportWizard(models.TransientModel):
     date_start = fields.Date(string="Start Date", required=True, default=fields.Date.today)
     date_end = fields.Date(string="End Date", required=True, default=fields.Date.today)
 
-    user_id = fields.Many2one('res.users', string='User')
-
     @api.multi
     def get_report(self):
         """Call when button 'Get Report' clicked.
@@ -23,15 +21,14 @@ class AttendanceRecapReportWizard(models.TransientModel):
             'model': self._name,
             'form': {
                 'date_start': self.date_start,
-                'date_end': self.date_end,
-                'user_id': self.user_id[0],
-                'display_name': self.user_id[0].display_name,
+                'date_end': self.date_start,
             },
         }
 
         # use `module_name.report_id` as reference.
         # `report_action()` will call `get_report_values()` and pass `data` automatically.
-        return self.env.ref('carry.recap_report').report_action(self, data=data)
+        # return self.env.ref('carry.recap_report').report_action(self, data=data)
+        return self.env.ref('carry.attendance_recap_report_view1').report_action(self, data=data)
 
 
 class ReportAttendanceRecap(models.AbstractModel):
@@ -47,7 +44,6 @@ class ReportAttendanceRecap(models.AbstractModel):
         date_start = datetime.strptime(data['form']['date_start'], DATE_FORMAT)
         date_end = datetime.strptime(data['form']['date_end'], DATE_FORMAT) + timedelta(days=1)
         date_diff = (date_end - date_start).days
-        empleado_id = data['form']['user_id']
 
         docs = []
 

@@ -13,9 +13,6 @@
                         <field name="date_end" string="Hasta:"/>
                     </group>
 	        </group>
-                <group>
-                    <field name="user_id" string="Empleado"/>
-		</group>
                 <footer>
                     <button name="get_report" string="Emitir Informe" type="object" class="oe_highlight"/>
                     <button string="Cancelar" special="cancel"/>
@@ -25,7 +22,7 @@
     </record>
 
     <act_window id="action_attendance_recap_report_wizard1"
-	        name="Listado Entradas/Salidas de Empleados"
+	        name="Listado Entradas/Salidas diarias"
                 res_model="attendance.recap.report.wizard1"
                 view_mode="form"
                 target="new"/>

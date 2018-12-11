@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+         <record id="view_print_leave_summary_form" model="ir.ui.view">
+            <field name="name">print.leave.summary.report.form</field>
+            <field name="model">leave.summary.report</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+	            <form string="Leave Summary Report">
+	                	<field name="leave_report_printed" invisible="1"/>
+	                		<group  attrs="{'invisible':[('leave_report_printed','=',True)]}" >
+	                		 	<group >
+		                			<field name="from_date" required="1" style="width:250px;"/>
+		                			<field name="to_date" required="1" style="width:250px;"/>
+	                		   	</group>
+	                		   	<group >
+	                		   		<field name="department_id"  style="width:250px;"/>
+	                		   </group>
+	                	   </group>
+	                	<group attrs="{'invisible':[('leave_report_printed','=',False)]}">
+	                	    <field name="file_name" invisible="1"/>
+	                		<field name="leave_summary_file" readonly="1"  filename="file_name"/>
+	                	</group>
+	                <footer>
+	                <button string='Generate'  name="action_print_leave_summary" 
+	                	type="object" class="btn-primary" attrs="{'invisible':[('leave_report_printed','=',True)]}"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+	                </footer>
+	            </form>
+            </field>
+        </record>
+       
+        <record id="action_print_leave_summary_report" model="ir.actions.act_window">
+            <field name="name">Leave Summary Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">leave.summary.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+       <menuitem name="Leave Summary Report" id="menu_print_leave_summary_report" action="action_print_leave_summary_report"
+       	sequence="205" parent="hr_holidays.menu_hr_holidays_report" />
+        
+</odoo>
