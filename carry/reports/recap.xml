@@ -48,10 +48,10 @@
                                 <span t-esc="doc['employee']"/>
                             </td>
                             <td class="text-center">
-                                <span t-esc="doc['entrada']"/>
+                                <span t-esc="doc['employee']"/>
                             </td>
 			    <td class="text-center">
-	                        <span t-esc="doc['salida']"/> 
+	                        <span t-esc="doc['employee']"/> 
 			    </td>
                             <td class="text-center">
 				<span t-esc="doc['horas_dia']"/>

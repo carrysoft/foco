@@ -6,7 +6,7 @@ from odoo import models, fields, api
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
 
 
-class AttendanceRecapReportWizard(models.TransientModel):
+class AttendanceRecapReportWizard1(models.TransientModel):
     _name = 'attendance.recap.report.wizard1'
 
     date_start = fields.Date(string="Start Date", required=True, default=fields.Date.today)
@@ -28,10 +28,10 @@ class AttendanceRecapReportWizard(models.TransientModel):
         # use `module_name.report_id` as reference.
         # `report_action()` will call `get_report_values()` and pass `data` automatically.
         # return self.env.ref('carry.recap_report').report_action(self, data=data)
-        return self.env.ref('carry.attendance_recap_report_view1').report_action(self, data=data)
+        return self.env.ref('carry.recap_report1').report_action(self, data=data)
 
 
-class ReportAttendanceRecap(models.AbstractModel):
+class ReportAttendanceRecap1(models.AbstractModel):
     """Abstract Model for report template.
 
     for `_name` model, please use `report.` as prefix then add `module_name.report_name`.
@@ -54,11 +54,10 @@ class ReportAttendanceRecap(models.AbstractModel):
             ],order='check_in')
 
         for attendance in attendances:
-            ent=attendance.check_in.strftime(DATETIME_FORMAT)
             docs.append({
                 'employee': attendance.display_name,
-                'entrada': ent,
-                'salida': self.env["res.lang"].datetime_formatter(attendance.check_out),
+#                'entrada': self.env["res.lang"].datetime_formatter(attendance.check_in),
+#                'salida': self.env["res.lang"].datetime_formatter(attendance.check_out),
                 'horas_dia': '{:5.2f}'.format(attendance.worked_hours),
             })
 
