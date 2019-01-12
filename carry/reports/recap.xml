@@ -24,6 +24,7 @@
             menu="False"/>
 
     <template id="attendance_recap_report_view1">
+	<t t-call="web.external_layout">
         <div class="header" style="border-bottom: 2px solid black">
             <h3 class="text-center">Listado de Entradas y Salidas diarias</h3>
             <h4 class="text-center">
@@ -48,10 +49,10 @@
                                 <span t-esc="doc['employee']"/>
                             </td>
                             <td class="text-center">
-                                <span t-esc="doc['employee']"/>
+                                <span t-esc="doc['entrada']"/>
                             </td>
 			    <td class="text-center">
-	                        <span t-esc="doc['employee']"/> 
+	                        <span t-esc="doc['salida']"/> 
 			    </td>
                             <td class="text-center">
 				<span t-esc="doc['horas_dia']"/>
@@ -77,5 +78,6 @@
                 </div>
             </div>
         </div>
+     </t>
     </template>
 </odoo>

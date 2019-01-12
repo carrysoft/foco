@@ -34,7 +34,7 @@ class LeaveSummaryReport(models.TransientModel):
 
     from_date = fields.Date(string='From Date')
     to_date = fields.Date(string='To Date')
-    leave_summary_file = fields.Binary('Leave Summary Report')
+    leave_summary_file = fields.Binary('Informe Resumen Ausencias')
     file_name = fields.Char('File Name')
     leave_report_printed = fields.Boolean('Leave Report Printed')
     department_id = fields.Many2one('hr.department','Department')
@@ -46,9 +46,9 @@ class LeaveSummaryReport(models.TransientModel):
         amount_tot = 0
         hr_holiday_objs_list = []
         column_heading_style = easyxf('font:height 200;font:bold True;align: horiz left;')
-        worksheet = workbook.add_sheet('Leave Summary')
+        worksheet = workbook.add_sheet('Resumen ausencias')
         worksheet.write(2, 2, self.from_date, easyxf('font:height 200;font:bold True;align: horiz center;'))
-        worksheet.write(2, 3, 'To',easyxf('font:height 200;font:bold True;align: horiz center;'))
+        worksheet.write(2, 3, 'a',easyxf('font:height 200;font:bold True;align: horiz center;'))
         worksheet.write(2, 4, self.to_date,easyxf('font:height 200;font:bold True;align: horiz center;'))
         worksheet.write(4, 0, _('Date'), column_heading_style)
         worksheet.write(4, 1, _('No of Days'), column_heading_style)
@@ -66,8 +66,8 @@ class LeaveSummaryReport(models.TransientModel):
         worksheet.col(5).width = 6500
         worksheet.col(6).width = 3000
         
-        String = self.from_date + ' ' + ' To ' + ' ' + self.to_date
-        worksheet2 = workbook.add_sheet('Employee Wise Leave Summary')
+        String = self.from_date + ' ' + ' hasta ' + ' ' + self.to_date
+        worksheet2 = workbook.add_sheet('Resumen ausencias por empleado')
         worksheet2.write_merge(2, 2, 0, 1, String, easyxf('font:height 200; align: horiz center;font:bold True;'))
         worksheet2.write(4, 0, _('Employee'), column_heading_style)
         worksheet2.write(4, 1, _('No of Leaves'), column_heading_style)
@@ -80,9 +80,9 @@ class LeaveSummaryReport(models.TransientModel):
         dict = {}
         for wizard in self:
             employee_leave_data = {}
-            heading =  'Leave Summary Report'
+            heading =  'Resumen ausencias'
             worksheet.write_merge(0, 0, 0, 6, heading, easyxf('font:height 210; align: horiz center;pattern: pattern solid, fore_color black; font: color white; font:bold True;' "borders: top thin,bottom thin"))
-            heading =  'Employee Wise Leave Summary'
+            heading =  'Resumen de ausencias por empleado'
             worksheet2.write_merge(0, 0, 0, 1, heading, easyxf('font:height 210; align: horiz center;pattern: pattern solid, fore_color black; font: color white; font:bold True;' "borders: top thin,bottom thin"))
             if wizard.department_id:
                 hr_holiday_objs = self.env['hr.holidays'].search([('date_from','>=',wizard.from_date),
@@ -134,7 +134,7 @@ class LeaveSummaryReport(models.TransientModel):
         workbook.save(fp)
         excel_file = base64.encodestring(fp.getvalue())
         wizard.leave_summary_file = excel_file
-        wizard.file_name = 'Leave Summary Report.xls'
+        wizard.file_name = 'Informe Resumen Ausencias.xls'
         wizard.leave_report_printed = True
         fp.close()
         return {
