@@ -136,7 +136,7 @@
                                         <field name="late_in" widget="float_time" sum="Quantity"/>
                                         <field name="overtime" widget="float_time" sum="Quantity"/>
                                         <field name="worked_hours" widget="float_time" sum="Quantity"/>
-                                        <field name="diff_time" widget="float_time" sum="Quantity"/>
+<!--                                        <field name="diff_time" widget="float_time" sum="Quantity"/> -->
                                         <field name="status"/>
                                         <field name="note"/>
                                         <button name="%(action_att_data_change)d"

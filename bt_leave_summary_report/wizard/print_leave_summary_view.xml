@@ -10,11 +10,11 @@
 	                	<field name="leave_report_printed" invisible="1"/>
 	                		<group  attrs="{'invisible':[('leave_report_printed','=',True)]}" >
 	                		 	<group >
-		                			<field name="from_date" required="1" style="width:250px;"/>
-		                			<field name="to_date" required="1" style="width:250px;"/>
+		                			<field name="from_date" string="Fecha desde:" required="1" style="width:250px;"/>
+		                			<field name="to_date" string="Fecha hasta:" required="1" style="width:250px;"/>
 	                		   	</group>
 	                		   	<group >
-	                		   		<field name="department_id"  style="width:250px;"/>
+	                		   		<field name="department_id"  string="Departamento" style="width:250px;"/>
 	                		   </group>
 	                	   </group>
 	                	<group attrs="{'invisible':[('leave_report_printed','=',False)]}">
@@ -22,16 +22,16 @@
 	                		<field name="leave_summary_file" readonly="1"  filename="file_name"/>
 	                	</group>
 	                <footer>
-	                <button string='Generate'  name="action_print_leave_summary" 
+	                <button string='Generar'  name="action_print_leave_summary" 
 	                	type="object" class="btn-primary" attrs="{'invisible':[('leave_report_printed','=',True)]}"/>
-                    <button string="Cancel" class="oe_link" special="cancel"/>
+                    <button string="Cancelar" class="oe_link" special="cancel"/>
 	                </footer>
 	            </form>
             </field>
         </record>
        
         <record id="action_print_leave_summary_report" model="ir.actions.act_window">
-            <field name="name">Leave Summary Report</field>
+            <field name="name">Informe Resumen de Ausencias</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">leave.summary.report</field>
             <field name="view_type">form</field>
@@ -39,7 +39,7 @@
             <field name="target">new</field>
         </record>
         
-       <menuitem name="Leave Summary Report" id="menu_print_leave_summary_report" action="action_print_leave_summary_report"
+       <menuitem name="Informe Resumen de Ausencias" id="menu_print_leave_summary_report" action="action_print_leave_summary_report"
        	sequence="205" parent="hr_holidays.menu_hr_holidays_report" />
         
 </odoo>

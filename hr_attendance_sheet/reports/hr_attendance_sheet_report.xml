@@ -25,7 +25,6 @@
                    <td><strong>Retraso</strong></td>
                    <td><strong>Extra</strong></td>
                    <td><strong>Horas</strong></td>
-                   <td><strong>T.Incompl</strong></td>
                    <td><strong>Estado</strong></td>
                    <td><strong>Nota</strong></td>
                 </tr>
@@ -40,7 +39,6 @@
 		    <td><span t-field="l.late_in" t-options='{"widget":"float_time"}' /></td>
 		    <td><span t-field="l.overtime" t-options='{"widget":"float_time"}' /></td>
 		    <td><span t-field="l.worked_hours" t-options='{"widget":"float_time"}' /></td>
-		    <td><span t-field="l.diff_time" t-options='{"widget":"float_time"}' /></td>
 		    <td><span t-field="l.status"/></td>
 		    <td><span t-field="l.note"/></td>
 		  </tr>

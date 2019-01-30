@@ -60,7 +60,11 @@ class EmployeePrint(models.TransientModel):
                     ci_out = central_out.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
                     ci_out = central_out.strftime("%d/%m/%Y %H:%M:%S")
 
-                    w_hours = '{:,.2f}'.format(rec.worked_hours)
+                    hour,minute = divmod(rec.worked_hours,1)
+                    minute *=60
+                    w_hours= '{0:0{width}}'.format(int(hour),width=2)+':{0:0{width}}'.format(int(minute),width=2)
+
+                    # w_hours = '{:,.2f}'.format(rec.worked_hours)
 
                     if rec.employee_id.id not in attendance_data:
                         emp_ids.append(rec.employee_id.id)
@@ -106,7 +110,11 @@ class EmployeePrint(models.TransientModel):
                 ci_out = central_out.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
                 ci_out = central_out.strftime("%d/%m/%Y %H:%M:%S")
 
-                w_hours = '{:,.2f}'.format(rec.worked_hours)
+                #w_hours = '{:,.2f}'.format(rec.worked_hours)
+
+                hour,minute = divmod(rec.worked_hours,1)
+                minute *=60
+                w_hours= '{0:0{width}}'.format(int(hour),width=2)+':{0:0{width}}'.format(int(minute),width=2)
                 
                 if rec.employee_id.id not in attendance_data:
                     emp_ids.append(rec.employee_id.id)

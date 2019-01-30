@@ -94,7 +94,7 @@ class attendance_sheet(models.Model):
         locale = self.env.context.get('lang', 'en_US')
         if locale == "ar_SY":
             locale = "ar"
-        self.name = _('Attendance Sheet of %s for %s') % (employee.name,
+        self.name = _('%s (%s) : %s - %s') % (employee.name,employee.identification_id,employee.department_id.name,
                                                           tools.ustr(
                                                               babel.dates.format_date(date=ttyme, format='MMMM-y',
                                                                                       locale=locale)))
@@ -167,14 +167,14 @@ class attendance_sheet(models.Model):
                 calender_id = emp.contract_id.resource_calendar_id
             else:
                 raise ValidationError(_(
-                    'Please add working hours to the %s `s contract ' % emp.name))
+                    'Debe añadir las horas de trabajo en el contrato de %s ' % emp.name))
                 return
 
             if att_sheet.att_policy_id:
                 policy_id = att_sheet.att_policy_id
             else:
                 raise ValidationError(_(
-                    'Please add Attendance Policy to the %s `s contract ' % emp.name))
+                    'Debe definir las politicas de asistencia en el contrato de %s ' % emp.name))
                 return
 
             def _get_time_from_float(float_type):
@@ -448,19 +448,19 @@ class attendance_sheet(models.Model):
 
                                 ac_sign_in = pytz.utc.localize(attendance_interval[0]).astimezone(tz)
                                 ac_sign_out = pytz.utc.localize(attendance_interval[1]).astimezone(tz)
-                                worked_hours = pytz.utc.localize(attendance_interval[2]).astimezone(tz)
-                                print ("trabajado")
-                                print (worked_hours)
+                                ac_sign_in_ = _get_float_from_time(ac_sign_in)
+                                ac_sign_out_= _get_float_from_time(ac_sign_out)
+                                worked_hours = ac_sign_out_ - ac_sign_in_
                                 values = {
                                     'date': date,
                                     'day': day_str,
-                                    'ac_sign_in': _get_float_from_time(ac_sign_in),
-                                    'ac_sign_out': _get_float_from_time(ac_sign_out),
+                                    'ac_sign_in': ac_sign_in_,
+                                    'ac_sign_out': ac_sign_out_,
                                     'overtime': float_overtime,
                                     'att_sheet_id': self.id,
                                     'status': 'ph',
-                                    'note': "working on Public Holiday",
-                                    'worked_hours': 2.3
+                                    'note': "Trabajo en Festivo",
+                                    'worked_hours': worked_hours
                                 }
                                 att_line.create(values)
                         else:
@@ -645,7 +645,7 @@ class attendance_sheet(models.Model):
                             overtime = attendance_interval[1] - attendance_interval[0]
                             ac_sign_in = pytz.utc.localize(attendance_interval[0]).astimezone(tz)
                             ac_sign_out = pytz.utc.localize(attendance_interval[1]).astimezone(tz)
-                            worked_hours = 6.5
+                            worked_hours = 0
                             # print " the actual sign in is +" + str(ac_sign_in)
                             float_overtime = overtime.total_seconds() / 3600
                             if float_overtime <= overtime_policy['we_after']:
@@ -673,7 +673,7 @@ class attendance_sheet(models.Model):
                             'att_sheet_id': self.id,
                             'status': 'weekend',
                             'note': "",
-                            'worked_hours': 1
+                            'worked_hours': 0
 
                         }
                         att_line.create(values)
@@ -710,7 +710,7 @@ class attendance_sheet(models.Model):
             contract_id = slip_data['value'].get('contract_id')
             if not contract_id:
                 raise exceptions.Warning(
-                    'There is No Contracts for %s That covers the period of the Attendance sheet' % employee.name)
+                    'El contrato de %s no cubre el periodo para la hoja de asistencia' % employee.name)
             worked_days_line_ids = slip_data['value'].get('worked_days_line_ids')
             overtime = [{
                 'name': "Overtime",

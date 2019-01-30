@@ -62,19 +62,25 @@ class ReportAttendanceRecap1(models.AbstractModel):
             utc = datetime.strptime(attendance.check_in, DEFAULT_SERVER_DATETIME_FORMAT)
             utc = utc.replace(tzinfo=from_zone)
             central = utc.astimezone(to_zone)
-            ci = central.strftime("%d/%m/%Y %H:%M:%S")
-            utc = datetime.strptime(attendance.check_out, DEFAULT_SERVER_DATETIME_FORMAT)
-            utc = utc.replace(tzinfo=from_zone)
-            central = utc.astimezone(to_zone)
-            co = central.strftime("%d/%m/%Y %H:%M:%S")
+            ci = central.strftime("%d/%m/%Y %H:%M")
+            try:
+                utc = datetime.strptime(attendance.check_out, DEFAULT_SERVER_DATETIME_FORMAT)
+                utc = utc.replace(tzinfo=from_zone)
+                central = utc.astimezone(to_zone)
+                co = central.strftime("%d/%m/%Y %H:%M")
+            except:
+                co=''
+
+            hour,minute = divmod(attendance.worked_hours,1)
+            minute *=60
+            w_hours = '{0:0{width}}'.format(int(hour),width=2)+':{0:0{width}}'.format(int(minute),width=2)
+            nombre='Nombre: {n} DNI: {id}: Departemento: {d}'.format (n=attendance.employee_id.name,id=attendance.employee_id.identification_id,d=attendance.employee_id.department_id.name)
 
             docs.append({
-                'employee': attendance.display_name,
+                'employee': nombre,
                 'entrada': ci,
-#                'entrada': self.env["res.lang"].datetime_formatter(attendance.check_in),
                 'salida': co,
-#                'salida': self.env["res.lang"].datetime_formatter(attendance.check_out),
-                'horas_dia': '{:5.2f}'.format(attendance.worked_hours),
+                'horas_dia': w_hours,
             })
 
         return {

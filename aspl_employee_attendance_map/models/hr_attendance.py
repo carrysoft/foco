@@ -43,6 +43,9 @@ class HrAttendance(models.Model):
     longitude = fields.Char(string="Logitude")
     os_name = fields.Char(string="Operationg System")
     browser_name = fields.Char(string="Browser")
+    location_name_out = fields.Char(string="Ubicacion salida")
+    latitude_out = fields.Char(string="latitud salida")
+    longitude_out = fields.Char(string="Logitud salida")
 
 
 class HrEmployee(models.Model):
@@ -106,6 +109,13 @@ class HrEmployee(models.Model):
             attendance = self.env['hr.attendance'].search([('employee_id', '=', self.id), ('check_out', '=', False)],limit=1)
             if attendance:
                 attendance.check_out = action_date
+                if latitude and longitude:
+                   if api_response_dict['status'] == 'OK':
+                      vals.update({
+                        'longitude_out': longitude,
+                        'latitude_out': latitude,
+                        'location_name_out': api_response_dict['results'][0]['formatted_address'],
+                    })
             else:
                 raise exceptions.UserError(('Cannot perform check out on %(empl_name)s, could not find corresponding check in. '
                       'Your attendances have probably been modified manually by human resources.') % {
