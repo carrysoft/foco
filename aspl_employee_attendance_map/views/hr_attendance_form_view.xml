@@ -5,20 +5,20 @@
       <field name="name">employee.attendance.map.form</field>
       <field name="model">employee.attendance.map</field>
       <field name="arch" type="xml">
-          <form string="Search Map" class="oe_form_configuration">
+          <form string="Buscar en Mapa" class="oe_form_configuration">
             <header>
-              <button string="Search" type="object" name="show_map" class="oe_highlight"/> 
-              <button special="cancel" string="Cancel" name="cancel" class="oe_link"/>
+              <button string="Buscar" type="object" name="show_map" class="oe_highlight"/> 
+              <button special="cancel" string="Cancelar" name="cancel" class="oe_link"/>
             </header>
               <sheet>
                   <group col='2'>
-                      <field name="department_id" style="width:200px;"/>
-                      <field name="job_position" style="width:200px;"/>
-                      <field name="employee_ids" widget="many2many_tags"/>
-                      <field name="attendance_date" style="width:200px;"/>
+                      <field string="Departamento" name="department_id" style="width:200px;"/>
+                      <field string="Puesto" name="job_position" style="width:200px;"/>
+                      <field string="Empleado" name="employee_ids" widget="many2many_tags"/>
+                      <field string="Fecha" name="attendance_date" style="width:200px;"/>
                   </group>
                   <notebook>
-                      <page string="Map">
+                      <page string="Mapa">
                          <div id="map" style="width: 800px;height: 500px;">
                          </div>
                       </page>
@@ -43,13 +43,36 @@
         <field name="arch" type="xml">
             <field name="check_out" position="after">
                 <field name="location_name"/>
-<!--                <field name="os_name"/>
-		<field name="browser_name"/> -->
+                <field name="location_name_out"/>
+                <field name="worked_hours" widget="float_time" />
             </field>
         </field>
     </record>
 
-    <menuitem id="employee_attendance_map_menu" name="Map" parent="hr_attendance.menu_hr_attendance_root" sequence="50"/>
-    <menuitem id="employee_attendance_map_submenu" name="Search Map" parent="employee_attendance_map_menu" sequence="1" action="action_employee_attendance_map"/>
+    <record id="view_attendance_form" model="ir.ui.view">
+        <field name="name">hr.attendance.form</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+        <field name="arch" type="xml">
+            <field name="check_out" position="after">
+                <field name="location_name"/>
+                <field name="location_name_out"/>
+            </field>
+        </field>
+    </record>
+
+    <act_window id="action_asistencias"
+        name="asistencias usuario"
+        res_model="hr.attendance"
+        view_mode="list"
+        limit="80"
+    />
+
+
+    <menuitem id="employee_attendance_map_menu" name="Mapa" parent="hr_attendance.menu_hr_attendance_root" sequence="50"/>
+    <menuitem id="employee_attendance_map_submenu" name="Buscar en Mapa" parent="employee_attendance_map_menu" sequence="1" action="action_employee_attendance_map"/>
+    <menuitem id="empledo_asistencias" parent="employee_attendance_map_menu" name="Asistencias empleado" action="action_asistencias" sequence="10" groups=""/>
+
+
   </data>
 </odoo>

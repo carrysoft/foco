@@ -110,12 +110,10 @@ class HrEmployee(models.Model):
             if attendance:
                 attendance.check_out = action_date
                 if latitude and longitude:
-                   if api_response_dict['status'] == 'OK':
-                      vals.update({
-                        'longitude_out': longitude,
-                        'latitude_out': latitude,
-                        'location_name_out': api_response_dict['results'][0]['formatted_address'],
-                    })
+                    if api_response_dict['status'] == 'OK':
+                       attendance.longitude_out = longitude
+                       attendance.latitude_out = latitude
+                       attendance.location_name_out = api_response_dict['results'][0]['formatted_address']
             else:
                 raise exceptions.UserError(('Cannot perform check out on %(empl_name)s, could not find corresponding check in. '
                       'Your attendances have probably been modified manually by human resources.') % {

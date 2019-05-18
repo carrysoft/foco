@@ -38,9 +38,9 @@
          </div>
             <table class="table table-condensed table-bordered" style="width: 100%">
                 <thead>
-                    <th class="text-center" style="width: 70%">Empleado/a</th>
-                    <th class="text-center" style="width: 15%">Entrada</th>
-                    <th class="text-center" style="width: 15%">Salida</th>
+                    <th class="text-center" style="width: 60%">Empleado/a</th>
+                    <th class="text-center" style="width: 20%">Entrada</th>
+                    <th class="text-center" style="width: 20%">Salida</th>
                     <th class="text-center" stype="width: 10%">Horas</th>
                 </thead>
                     <t t-foreach="docs" t-as="doc">

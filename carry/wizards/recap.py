@@ -74,7 +74,8 @@ class ReportAttendanceRecap1(models.AbstractModel):
             hour,minute = divmod(attendance.worked_hours,1)
             minute *=60
             w_hours = '{0:0{width}}'.format(int(hour),width=2)+':{0:0{width}}'.format(int(minute),width=2)
-            nombre='Nombre: {n} DNI: {id}: Departemento: {d}'.format (n=attendance.employee_id.name,id=attendance.employee_id.identification_id,d=attendance.employee_id.department_id.name)
+            nombre='{n},{id} - {d}'.format (n=attendance.employee_id.name,id=attendance.employee_id.identification_id,d=attendance.employee_id.department_id.name)
+#            nombre='Nombre: {n} DNI: {id}: Departemento: {d}'.format (n=attendance.employee_id.name,id=attendance.employee_id.identification_id,d=attendance.employee_id.department_id.name)
 
             docs.append({
                 'employee': nombre,
